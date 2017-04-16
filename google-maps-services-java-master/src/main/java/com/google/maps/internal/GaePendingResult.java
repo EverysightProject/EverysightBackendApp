@@ -54,8 +54,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import everysight.backend.EncodedPolylineInstanceCreator;
-
 
 /**
  * A PendingResult backed by a HTTP call executed by Google App Engine URL Fetch capability,

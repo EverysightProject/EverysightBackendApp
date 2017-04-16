@@ -1,4 +1,4 @@
-package everysight.backend;
+package com.google.maps.internal;
 
 import com.google.gson.InstanceCreator;
 import com.google.maps.model.EncodedPolyline;
