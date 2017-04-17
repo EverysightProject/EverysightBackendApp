@@ -1,0 +1,128 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "0.0.0"
+  title: My Directions API
+
+# Describe your paths here
+paths:
+  # This is a path endpoint. Change it.
+  /directions:
+    # This is a HTTP operation
+    get:
+      # Describe this verb here. Note: you can use markdown
+      description: |
+        Get directions between two locations
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        - name: from
+          in: body
+          description: origin locations by description
+          schema:
+            type: string
+
+        
+        
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            title: ArrayOfPersons
+            type: array
+            items:
+              title: Person
+              type: object
+              properties:
+                name:
+                  type: string
+                single:
+                  type: boolean
+
+################################################################################
+#                                 Definitions                                  #
+################################################################################                
+definitions:
+  RouteParameters:
+    type: object
+    properties:
+      from:
+        type: string
+        description: origin point by description
+      to:
+        type: string
+        description: destination point by description
+      origin:
+        type: object 
+        items:
+          $ref: '#/definitions/GeoLocation'
+        description: origin by GEO
+      destination:
+        type: object 
+        items:
+          $ref: '#/definitions/GeoLocation'
+        description: destination by GEO
+      travelMode:
+        description: Choose how to travel
+        type: string
+        enum:
+          - DRIVING
+          - WALKING
+          - BICYCLING
+          - TRANSIT
+          - UNKNOWN
+        
+      avoid:
+        description: Route preferences
+        type: string
+        enum:
+          - TOLLS
+          - HIGHWAYS
+          - FERRIES
+        
+      units:
+        description: Unit system
+        type: string
+        enum:
+          - METRIC
+          - IMPERIAL
+      region:
+        description: The region code, specified as a ccTLD
+        type: string
+      arrivalTime:
+        description: time to arrive in millis sence epoc
+        type: number
+        format: long
+      departureTime:
+        description: time to depart in millis sence epoc
+        type: number
+        format: long
+      places:
+        description: Places to include in the route
+        type: array
+        items:
+          type: string
+      
+
+      
+  GeoLocation:
+    type: object
+    properties:
+      Latitude:
+        type: number
+        format: double
+      Longitude:
+        type: number
+        format: double
+  
+                  
+                  
+                  

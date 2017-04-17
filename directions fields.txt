@@ -1,0 +1,18 @@
+origin - string
+destination  - string
+origin - latlong
+destination - latlong
+travel mode -travelmode enum
+avoid - route restrictions enum
+units unit enum
+region - string
+
+arrival time readable instant
+departure time readale instant
+
+waypoints string
+waypoints latlong
+alternative boolean
+transmit mode - transmit mode enum
+transmit routing preferrence - transmit routing preffernce enum
+traffic model - traffic model enum
