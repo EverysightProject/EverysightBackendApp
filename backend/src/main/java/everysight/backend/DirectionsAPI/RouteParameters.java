@@ -30,7 +30,6 @@ public class RouteParameters {
   private String originName = null;
   @SerializedName("destinationName")
   private String destinationName = null;
-
   @SerializedName("origin")
   private LatLng origin = null;
   @SerializedName("destination")

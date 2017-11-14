@@ -30,7 +30,7 @@ public class ServletPostAsyncTask extends AsyncTask<Pair<Context, String>, Void,
 
         try {
             // Set up the request
-            URL url = new URL("https://everysightbackendapp.appspot.com/bye");
+            URL url = new URL("https://everysightbackendapp.appspot.com/places");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setDoInput(true);

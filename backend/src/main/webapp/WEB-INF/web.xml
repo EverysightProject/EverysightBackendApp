@@ -6,7 +6,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
+        <url-pattern>/places</url-pattern>
 		<url-pattern>/directions</url-pattern>
 		<html-file>DirectionsAPI.html</html-file>
     </servlet-mapping>
