@@ -2,12 +2,6 @@ package everysight.backend.PlacesAPI;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.maps.model.LatLng;
-import com.google.maps.model.PlaceType;
-import com.google.maps.model.PriceLevel;
-import com.google.maps.model.RankBy;
-
-import java.util.List;
-
 
 /**
  * Created by t-aryehe on 11/10/2017.
