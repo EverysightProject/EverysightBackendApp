@@ -1,14 +1,18 @@
 package everysight.backend.DirectionsAPI;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GaeRequestHandler;
 import com.google.maps.GeoApiContext;
+import com.google.maps.internal.LatLngAdapter;
+import com.google.maps.internal.SafeEnumAdapter;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TransitMode;
 import com.google.maps.model.TransitRoutingPreference;
+import com.google.maps.model.TravelMode;
 
 import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
@@ -30,7 +34,10 @@ public class DirectionRequest {
         try {
             String parameters = IOUtils.toString(req.getInputStream(), "UTF-8");
 
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(LatLng.class, new LatLngAdapter())
+                    .registerTypeAdapter(TravelMode.class, new SafeEnumAdapter<TravelMode>(TravelMode.UNKNOWN))
+                    .create();
             RouteParameters routeParameters = gson.fromJson(parameters,RouteParameters.class);
             resp.setContentType("application/json");
             GeoApiContext context = new GeoApiContext(new GaeRequestHandler()).setApiKey("AIzaSyBnZO0bEmFgi3XN64zeafdAQSurfdfe4F8");
