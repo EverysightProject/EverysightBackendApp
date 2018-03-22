@@ -1,16 +1,10 @@
-package everysight.backend.DirectionsAPI;
+package CloudController;
 
 import com.google.gson.annotations.SerializedName;
-import com.sun.imageio.spi.RAFImageOutputStreamSpi;
 
 public class RouteParameters {
 
-  public RouteParameters()
-  {
-
-  }
-
-  public RouteParameters(String origin,String destination)
+  public RouteParameters(String origin, String destination)
   {
     this.originName = origin;
     this.destinationName = destination;

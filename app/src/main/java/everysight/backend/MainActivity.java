@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.View;
 
+import CloudController.DirectionsAsyncTask;
+import CloudController.RouteParameters;
 import CloudController.ServletPostAsyncTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +31,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        new ServletPostAsyncTask().execute(new Pair<Context, String>(this, "Manfred"));
-    }
 
+        RouteParameters rp = new RouteParameters("technion","haifa");
+
+        DirectionsAsyncTask directionsAsyncTask = new DirectionsAsyncTask(this);
+        directionsAsyncTask.setRouteParameters(rp);
+        directionsAsyncTask.execute(new Pair<Context, String>(this, ""));
+    }
 }

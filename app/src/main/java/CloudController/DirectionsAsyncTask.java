@@ -1,9 +1,13 @@
 package CloudController;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,37 +19,40 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ServletPostAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+public class DirectionsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
     private Context context;
+    private RouteParameters routeParameters = null;
+    private Activity mCaller;
+
+    public DirectionsAsyncTask(Activity caller)
+    {
+        mCaller = caller;
+    }
 
     @Override
     protected String doInBackground(Pair<Context, String>... params) {
         context = params[0].first;
-        String name = params[0].second;
+
+        Gson gson = new Gson();
 
         try {
             // Set up the request
             URL url = new URL("https://everysightbackendapp.appspot.com/directions");
+         //   URL url = new URL("http://192.168.1.18/directions");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoInput(true);
             connection.setDoOutput(true);
-
-
-            // Build name data request params
-            Map<String, String> nameValuePairs = new HashMap<>();
-            nameValuePairs.put("name", name);
-            String postParams = buildPostDataString(nameValuePairs);
 
             // Execute HTTP Post
             OutputStream outputStream = connection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-            writer.write(postParams);
+            writer.write(gson.toJson(routeParameters));
             writer.flush();
             writer.close();
             outputStream.close();
@@ -66,8 +73,9 @@ public class ServletPostAsyncTask extends AsyncTask<Pair<Context, String>, Void,
             }
             return "Error: " + responseCode + " " + connection.getResponseMessage();
 
-        } catch (IOException e) {
-            return e.getMessage();
+        } catch (IOException exp) {
+            Log.i("direction",exp.getMessage());
+            return exp.getMessage();
         }
     }
 
@@ -90,7 +98,21 @@ public class ServletPostAsyncTask extends AsyncTask<Pair<Context, String>, Void,
     }
 
     @Override
-    protected void onPostExecute(String result) {
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+    protected void onPostExecute(String result)
+    {
+            Intent data = new Intent();
+            data.putExtra("Result",result);
+            mCaller.setResult(mCaller.RESULT_OK,data);
+            mCaller.finish();
+    }
+
+    public void setRouteParameters(RouteParameters routeParameters)
+    {
+        this.routeParameters = routeParameters;
+    }
+
+    public RouteParameters getRouteParameters()
+    {
+        return this.routeParameters;
     }
 }
